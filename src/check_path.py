@@ -1,14 +1,14 @@
 import os
 from os import getcwd, scandir
 
-current_path = getcwd().replace("\\", "/")
-print(current_path)
+# current_path = getcwd().replace("\\", "/")
+# print(current_path)
 
-needed_path = input().split("/")
-print(needed_path)
+# needed_path = input().split("/")
+# print(needed_path)
 
 
-def check_path(needed_path=None):
+def check_path(current_path, needed_path=None):
     case = None
     buffer_path = None
 
@@ -88,4 +88,4 @@ def check_path(needed_path=None):
     return [case, buffer_path]
 
 
-print(check_path(needed_path))
+# print(check_path(needed_path))

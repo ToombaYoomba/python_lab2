@@ -6,7 +6,7 @@ current_path = getcwd().replace("\\", "/")
 print(f"current path: {current_path}")
 
 needed_path = input().split("/")
-data = check_path(needed_path)
+data = check_path(current_path, needed_path)
 print(data)
 
 # if os.path.exists(current_path.replace('\\', '/')):
