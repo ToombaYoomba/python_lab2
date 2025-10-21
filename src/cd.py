@@ -1,80 +1,53 @@
-import stat
-from datetime import datetime
-from os import listdir, scandir, getcwd
-import os
+from os import getcwd
 
-current_path = getcwd().replace('\\', '/')
+from src.check_path import check_path
+
+current_path = getcwd().replace("\\", "/")
 print(f"current path: {current_path}")
 
-data = input().split('/')
-# print(data)
+needed_path = input().split("/")
+data = check_path(needed_path)
+print(data)
 
 # if os.path.exists(current_path.replace('\\', '/')):
 #     print("yes")
 # else:
 #     print("no")
 
-def cd(current_path):
 
-    if data[0] == '.':
+def cd(data):
+    if data[0] == "n":
+        print(f"stay in current directory {current_path}")
+        # pass
 
-        if len(data[1].strip()) == 0 or len(data[1]) == 0:
-            print(f"Stay in current directory {current_path}")
-            pass
+    elif data[0] == "b":
+        current_path = data[1]
+        print(f"go back to {current_path}")
 
-        else:
-            new_path = current_path + '/' + '/'.join(data[1:])
-            if os.path.exists(new_path):
-                current_path = new_path
-                print(f"new path: {current_path}")
-            
-            else:
-                print(f"Error bad path ./{'/'.join(data[1:])}")
+    elif data[0] == "s":
+        current_path = data[1]
+        print(f"go to source directory {current_path}")
 
-    elif data[0] == '..':
+    elif data[0] == "c":
+        print(f"stay in current directory {current_path}")
 
-        new_path = '/'.join(current_path.split('/')[:-1])
+    elif data[0] == "rec./":
+        current_path = data[1]
+        print(f"new path from current by './': {current_path}")
 
-        if os.path.exists(new_path):
-                current_path = new_path
-                print(f"new path back {current_path}")
+    elif data[0] == "rec":
+        current_path = data[1]
+        print(f"new path from current: {current_path}")
 
-        else:
-            print(f"Error bad path ..")
+    elif data[0] == "abs":
+        current_path = data[1]
+        print(f"new path absolute: {current_path}")
 
-
-
-    elif data[0] == '~':
-
-        current_path = os.path.expanduser("~")
-        print(f"new path source {current_path}")
-
+    elif data[0] in ["f./", "frec", "fabs"]:
+        print(f"can't move to file {current_path}")
 
     else:
+        pass
 
-        directories = [item.name for item in scandir(current_path) if item.is_dir()]
-        # print(directories)
 
-        added_path = '/'.join(data)
-
-        # от текущего
-        if data[0] in directories:
-            new_path = current_path + '/' + '/'.join(data)
-            if os.path.exists(new_path):
-                current_path = new_path
-                print(f"new path from current: {current_path}")
-            
-            else:
-                print(f"Error bad path ./{'/'.join(data[1:])}")
-
-        #абсолютный путь
-        elif os.path.exists(added_path):
-                current_path = added_path
-                print(f"new path absolute: {current_path}")
-
-        else:
-            print(f"Error bad path {'/'.join(data)}")
-
-        
-
-cd(current_path)
+cd(data)
