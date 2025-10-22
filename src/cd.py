@@ -15,7 +15,7 @@ print(data)
 #     print("no")
 
 
-def cd(data):
+def cd(data, current_path):
     if data[0] == "n":
         print(f"stay in current directory {current_path}")
         # pass
@@ -44,10 +44,15 @@ def cd(data):
         print(f"new path absolute: {current_path}")
 
     elif data[0] in ["f./", "frec", "fabs"]:
-        print(f"can't move to file {current_path}")
+        print(f"can't move to file {data[2]}")
 
-    else:
+    elif data[0] == "e":
         pass
 
+    else:
+        print("bad case in cd")
 
-cd(data)
+    return current_path
+
+
+cd(data, current_path)

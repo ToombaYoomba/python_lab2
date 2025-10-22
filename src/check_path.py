@@ -11,17 +11,20 @@ from os import getcwd, scandir
 def check_path(current_path, needed_path=None):
     case = None
     buffer_path = None
+    enter_path = needed_path
+    needed_path = needed_path.split("/")
+    print(needed_path)
 
     if (
         needed_path is None
         or len(needed_path[0].strip()) == 0
         or len(needed_path[0]) == 0
     ):
-        case = "n"
+        case = "n" #no path
         buffer_path = None
 
-    elif needed_path[0] == "..":
-        case = "b"
+    elif needed_path[0] == "..": 
+        case = "b" #back path
 
         new_path = "/".join(current_path.split("/")[:-1])
 
@@ -30,9 +33,10 @@ def check_path(current_path, needed_path=None):
 
         else:
             print("Error bad path ..")
+            case = "e"
 
     elif needed_path[0] == "~":
-        case = "s"
+        case = "s" #home path
         buffer_path = os.path.expanduser("~")
 
     elif needed_path[0] == ".":
@@ -40,52 +44,59 @@ def check_path(current_path, needed_path=None):
 
         if len(needed_path[1].strip()) == 0 or len(needed_path[1]) == 0:
             # print(f"Stay in current directory {current_path}")
-            case = "c"
+            case = "c" #stay in current path with ./
             buffer_path = current_path
 
         else:  # ./some case
-            case = "rec./"
+            case = "rec./" #got rec ./
 
             new_path = current_path + "/" + "/".join(needed_path[1:])
             if os.path.exists(new_path):
                 if os.path.isfile(new_path):
-                    case = "f./"
+                    case = "f./" #go to file rec ./
                 buffer_path = new_path
                 # print(f"new path from current ./: {buffer_path}")
 
             else:
-                print(f"Error bad path ./{'/'.join(needed_path[1:])}")
+                print(f"Error bad path ./{enter_path}")
+                case = "e"
+
+    # directories = [item.name for item in scandir(current_path) if item.is_dir()]
+    # print(directories)
 
     else:
-        directories = [item.name for item in scandir(current_path) if item.is_dir()]
-        # print(directories)
 
         added_path = "/".join(needed_path)
 
-        # от текущего
-        if needed_path[0] in directories:
-            new_path = current_path + "/" + "/".join(needed_path)
-            if os.path.exists(new_path):
-                if os.path.isfile(new_path):
-                    case = "frec"
-                else:
-                    case = "rec"
-                buffer_path = new_path
-            else:
-                print(f"Error bad path ./{'/'.join(needed_path[1:])}")
+        new_path = current_path + "/" + "/".join(needed_path)
 
-        # абсолютный путь
-        elif os.path.exists(added_path):
+        if os.path.exists(new_path): #is rec
             if os.path.isfile(new_path):
-                case = "fabs"
+                case = "frec" #go to file rec
             else:
-                case = "abs"
+                case = "rec" #go rec
+            buffer_path = new_path
+
+        elif os.path.exists(added_path): #is abs
+            if os.path.isfile(added_path):
+                case = "fabs" #go to file abs
+            else:
+                case = "abs" #go abs
+            buffer_path = added_path
+
+        elif os.path.exists("/".join(new_path.split("/")[:-1])):
+            case = "newrec"
+            buffer_path = new_path
+        
+        elif os.path.exists("/".join(added_path.split("/")[:-1])):
+            case = "newabs"
             buffer_path = added_path
 
         else:
-            print(f"Error bad path not found {'/'.join(needed_path[1:])}")
+            print(f"Error bad path not found {enter_path}")
+            case = "e"
 
-    return [case, buffer_path]
+    return [case, buffer_path, enter_path]
 
 
 # print(check_path(needed_path))
