@@ -13,7 +13,7 @@ def check_path(current_path, needed_path=None):
     buffer_path = None
     enter_path = needed_path
     needed_path = needed_path.split("/")
-    print(needed_path)
+    # print(needed_path)
 
     if (
         needed_path is None

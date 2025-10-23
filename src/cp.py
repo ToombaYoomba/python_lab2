@@ -3,11 +3,11 @@ from src.check_path import check_path
 import os
 from os import getcwd
 
-current_path = getcwd().replace("\\", "/")
-print(f"current path: {current_path}")
+# current_path = getcwd().replace("\\", "/")
+# print(f"current path: {current_path}")
 
-data = input().split()
-print(data)
+# data = input().split()
+# print(data)
 
 def cp(current_path, data):
 
@@ -55,4 +55,4 @@ def cp(current_path, data):
             else:
                 print("Trying to copy to many files")
 
-cp(current_path, data)
+# cp(current_path, data)
