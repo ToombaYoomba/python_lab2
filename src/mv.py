@@ -1,6 +1,5 @@
 import os
 import shutil
-from os import getcwd
 
 from src.check_path import check_path
 from src.cp import cp
