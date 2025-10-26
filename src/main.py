@@ -7,6 +7,7 @@ from src.logging import logging
 from src.ls import ls
 from src.mv import mv
 from src.rm import rm
+from src.zip import zip
 
 
 def main() -> None:
@@ -118,6 +119,25 @@ def main() -> None:
 
                     with open("src/shell.log", "w", encoding="utf-8"):
                         pass
+
+                elif command == "zip":
+                    if command_data is None:
+                        error = "ERROR: not enough arguments for zip"
+                        print(error)
+
+                        logging(error)
+                    
+                    elif len(command_data) != 2:
+                        error = "ERROR: wrong number of arguments for zip"
+                        print(error)
+
+                        logging(error)
+
+                    else:
+                        zip(current_path, command_data)
+
+                        logging(input_data)
+
 
                 else:
                     error = f"ERROR: unknown command {input_data}"
