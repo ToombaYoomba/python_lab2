@@ -1,5 +1,4 @@
-import os
-import shutil
+# import shutil
 
 # a = "/e/Cats/Done"
 # b = "A".split("/")
@@ -15,6 +14,6 @@ import shutil
 # dest = "E:/Cats/LabaPython/python_lab2/test_dir/tests.txt"
 # shutil.copytree(st, dest)  
 
-data = ['move.txt', 'test_dir', 'src']
-data.insert(0, "-r")
-print(data)
+# data = ['move.txt', 'test_dir', 'src']
+# data.insert(0, "-r")
+# print(data)

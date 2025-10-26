@@ -1,5 +1,4 @@
 import os
-from os import getcwd, scandir
 
 # current_path = getcwd().replace("\\", "/")
 # print(current_path)
@@ -8,23 +7,28 @@ from os import getcwd, scandir
 # print(needed_path)
 
 
-def check_path(current_path, needed_path=None):
+def check_path(current_path, needed_path):
     case = None
     buffer_path = None
     enter_path = needed_path
-    needed_path = needed_path.split("/")
+
+    if needed_path is None:
+        pass
+    else:
+        needed_path = needed_path.split("/")
+
     # print(needed_path)
 
-    if (
-        needed_path is None
-        or len(needed_path[0].strip()) == 0
-        or len(needed_path[0]) == 0
-    ):
-        case = "n" #no path
+    if needed_path is None:
+        case = "n"  # no path
         buffer_path = None
 
-    elif needed_path[0] == "..": 
-        case = "b" #back path
+    elif len(needed_path[0].strip()) == 0 or len(needed_path[0]) == 0:
+        case = "n"  # no path
+        buffer_path = None
+
+    elif needed_path[0] == "..":
+        case = "b"  # back path
 
         new_path = "/".join(current_path.split("/")[:-1])
 
@@ -36,7 +40,7 @@ def check_path(current_path, needed_path=None):
             case = "e"
 
     elif needed_path[0] == "~":
-        case = "s" #home path
+        case = "s"  # home path
         buffer_path = os.path.expanduser("~")
 
     elif needed_path[0] == ".":
@@ -44,16 +48,16 @@ def check_path(current_path, needed_path=None):
 
         if len(needed_path[1].strip()) == 0 or len(needed_path[1]) == 0:
             # print(f"Stay in current directory {current_path}")
-            case = "c" #stay in current path with ./
+            case = "c"  # stay in current path with ./
             buffer_path = current_path
 
         else:  # ./some case
-            case = "rec./" #got rec ./
+            case = "rec./"  # got rec ./
 
             new_path = current_path + "/" + "/".join(needed_path[1:])
             if os.path.exists(new_path):
                 if os.path.isfile(new_path):
-                    case = "f./" #go to file rec ./
+                    case = "f./"  # go to file rec ./
                 buffer_path = new_path
                 # print(f"new path from current ./: {buffer_path}")
 
@@ -65,29 +69,28 @@ def check_path(current_path, needed_path=None):
     # print(directories)
 
     else:
-
         added_path = "/".join(needed_path)
 
         new_path = current_path + "/" + "/".join(needed_path)
 
-        if os.path.exists(new_path): #is rec
+        if os.path.exists(new_path):  # is rec
             if os.path.isfile(new_path):
-                case = "frec" #go to file rec
+                case = "frec"  # go to file rec
             else:
-                case = "rec" #go rec
+                case = "rec"  # go rec
             buffer_path = new_path
 
-        elif os.path.exists(added_path): #is abs
+        elif os.path.exists(added_path):  # is abs
             if os.path.isfile(added_path):
-                case = "fabs" #go to file abs
+                case = "fabs"  # go to file abs
             else:
-                case = "abs" #go abs
+                case = "abs"  # go abs
             buffer_path = added_path
 
         elif os.path.exists("/".join(new_path.split("/")[:-1])):
             case = "newrec"
             buffer_path = new_path
-        
+
         elif os.path.exists("/".join(added_path.split("/")[:-1])):
             case = "newabs"
             buffer_path = added_path

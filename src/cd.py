@@ -1,13 +1,11 @@
-from os import getcwd
-
 from src.check_path import check_path
 
-current_path = getcwd().replace("\\", "/")
-print(f"current path: {current_path}")
+# current_path = getcwd().replace("\\", "/")
+# print(f"current path: {current_path}")
 
-needed_path = input().split("/")
-data = check_path(current_path, needed_path)
-print(data)
+# needed_path = input().split("/")
+# data = check_path(current_path, needed_path)
+# print(data)
 
 # if os.path.exists(current_path.replace('\\', '/')):
 #     print("yes")
@@ -15,7 +13,10 @@ print(data)
 #     print("no")
 
 
-def cd(data, current_path):
+def cd(current_path, data):
+    data = check_path(current_path, data)
+    # print(data)
+
     if data[0] == "n":
         print(f"stay in current directory {current_path}")
         # pass
@@ -50,9 +51,9 @@ def cd(data, current_path):
         pass
 
     else:
-        print("bad case in cd")
+        print(f"bad case in cd with input: {data[2]}")
 
     return current_path
 
 
-cd(data, current_path)
+# cd(data, current_path)

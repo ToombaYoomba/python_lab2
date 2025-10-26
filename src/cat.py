@@ -1,5 +1,3 @@
-from os import getcwd
-
 from src.check_path import check_path
 
 # current_path = getcwd().replace("\\", "/")
@@ -15,7 +13,9 @@ from src.check_path import check_path
 #     print("no")
 
 
-def cat(data):
+def cat(current_path, data):
+    data = check_path(current_path, data)
+
     if data[0] == "n":
         # print(f"stay in current directory {current_path}")
         pass
@@ -30,7 +30,7 @@ def cat(data):
         print(f"{data[2]} is not file")
 
     elif data[0] in ["f./", "frec", "fabs"]:
-        with open(data[1], 'r', encoding='utf-8') as file:
+        with open(data[1], "r", encoding="utf-8") as file:
             content = file.read()
             print(content)
 
