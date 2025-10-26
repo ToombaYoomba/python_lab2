@@ -8,6 +8,7 @@ from src.ls import ls
 from src.mv import mv
 from src.rm import rm
 from src.zip import zip
+from src.unzip import unzip
 
 
 def main() -> None:
@@ -36,7 +37,8 @@ def main() -> None:
             # print(f"command {command}")
             # print(f"command data {command_data}")
 
-            try:
+            if True:
+            # try:
                 if command == "ls":
                     ls(current_path, command_data)
 
@@ -138,6 +140,24 @@ def main() -> None:
 
                         logging(input_data)
 
+                elif command == "unzip":
+                    if command_data is None:
+                        error = "ERROR: not enough arguments for unzip"
+                        print(error)
+
+                        logging(error)
+                    
+                    elif len(command_data) != 1:
+                        error = "ERROR: wrong number of arguments for unzip"
+                        print(error)
+
+                        logging(error)
+
+                    else:
+                        unzip(current_path, command_data)
+
+                        logging(input_data)
+
 
                 else:
                     error = f"ERROR: unknown command {input_data}"
@@ -145,10 +165,10 @@ def main() -> None:
 
                     logging(error)
 
-            except Exception as error:
-                print(f"Error: {error}")
+            # except Exception as error:
+            #     print(f"Error: {error}")
 
-                logging("Error: " + str(error))
+            #     logging("Error: " + str(error))
 
 
 if __name__ == "__main__":
