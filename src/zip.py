@@ -15,7 +15,7 @@ def zip(current_path, data):
 
         with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
 
-            dir_name = os.path.basename(os.path.normpath(dir_path))
+            dir_name = dir_path.split("/")[-1]
             
             for root, dirs, files in os.walk(dir_path):
                 for file in files:

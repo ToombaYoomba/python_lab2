@@ -9,6 +9,9 @@ from src.mv import mv
 from src.rm import rm
 from src.zip import zip
 from src.unzip import unzip
+from src.tar import tar
+from src.untar import untar
+from src.grep import grep
 
 
 def main() -> None:
@@ -20,7 +23,7 @@ def main() -> None:
     while flag:
         error = None
 
-        print(f"{current_path} :3")
+        print(f"\n{current_path} :3")
         input_data = input("$ ")
 
         if len(input_data) == 0 or len(input_data.strip()) == 0:
@@ -115,13 +118,6 @@ def main() -> None:
 
                         logging(input_data)
 
-                elif command == "q":
-                    flag = False
-                    print("\n ---PROGRAM CLOSED--- \n")
-
-                    with open("src/shell.log", "w", encoding="utf-8"):
-                        pass
-
                 elif command == "zip":
                     if command_data is None:
                         error = "ERROR: not enough arguments for zip"
@@ -158,6 +154,66 @@ def main() -> None:
 
                         logging(input_data)
 
+                elif command == "tar":
+                    if command_data is None:
+                        error = "ERROR: not enough arguments for tar"
+                        print(error)
+
+                        logging(error)
+                    
+                    elif len(command_data) != 2:
+                        error = "ERROR: wrong number of arguments for tar"
+                        print(error)
+
+                        logging(error)
+
+                    else:
+                        tar(current_path, command_data)
+
+                        logging(input_data)
+
+                elif command == "untar":
+                    if command_data is None:
+                        error = "ERROR: not enough arguments for untar"
+                        print(error)
+
+                        logging(error)
+                    
+                    elif len(command_data) != 1:
+                        error = "ERROR: wrong number of arguments for untar"
+                        print(error)
+
+                        logging(error)
+
+                    else:
+                        untar(current_path, command_data)
+
+                        logging(input_data)
+
+                elif command == "grep":
+                    if command_data is None:
+                        error = "ERROR: not enough arguments for grep"
+                        print(error)
+
+                        logging(error)
+                    
+                    elif len(command_data) < 1:
+                        error = "ERROR: wrong number of arguments for grep"
+                        print(error)
+
+                        logging(error)
+
+                    else:
+                        grep(current_path, command_data)
+
+                        logging(input_data)
+
+                elif command == "q":
+                    flag = False
+                    print("\n ---PROGRAM CLOSED--- \n")
+
+                    with open("src/shell.log", "w", encoding="utf-8"):
+                        pass
 
                 else:
                     error = f"ERROR: unknown command {input_data}"
