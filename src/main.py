@@ -23,7 +23,7 @@ def main() -> None:
     while flag:
         error = None
 
-        print(f"\n{current_path} :3")
+        print(f"\n{current_path}    ₍^. .^₎⟆")
         input_data = input("$ ")
 
         if len(input_data) == 0 or len(input_data.strip()) == 0:
