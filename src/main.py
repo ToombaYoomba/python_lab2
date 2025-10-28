@@ -12,6 +12,7 @@ from src.unzip import unzip
 from src.tar import tar
 from src.untar import untar
 from src.grep import grep
+from src.history import history
 
 
 def main() -> None:
@@ -207,6 +208,20 @@ def main() -> None:
                         grep(current_path, command_data)
 
                         logging(input_data)
+
+                elif command == "history":
+                    if command_data is None:
+                        history(command_data)
+                        
+                    elif len(command_data) > 1:
+                        error = "ERROR: wrong number of arguments for history"
+                        print(error)
+
+                        logging(error)
+
+                    else:
+
+                        history(command_data[0])
 
                 elif command == "q":
                     flag = False
