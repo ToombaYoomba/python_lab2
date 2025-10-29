@@ -12,10 +12,18 @@ def grep(current_path, data):
 
         if len(data) > 2 and flags[0] == "-r" and data[1] == "-i":
             flags.append("-i")
-            grep_data = data[2:]
+            if len(data) in [3,4]:
+                grep_data = data[2:]
+            else:
+                print("wrong number of arguments")
+                return 0
         elif len(data) > 2 and flags[0] == "-i" and data[1] == "-r":
             flags.append("-r")
-            grep_data = data[2:]
+            if len(data) in [3,4]:
+                grep_data = data[2:]
+            else:
+                print("wrong number of arguments")
+                return 0
         elif len(data) in [2,3]:
             grep_data = data[1:]
         else:

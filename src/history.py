@@ -10,12 +10,14 @@ def history(N = None):
             N = int(N)
         except Exception:
             print("wrong argument for history")
-        with open("src/shell.log", "r") as f:
+        with open("shell.log", "r") as f:
                 
                 lines = f.readlines()
-                for i in range(N):
+                i = -N
+                while i < 0:
                     try:
                         print(lines[i].strip())
+                        i += 1
 
                     except Exception:
                         return 0

@@ -17,3 +17,7 @@
 # data = ['move.txt', 'test_dir', 'src']
 # data.insert(0, "-r")
 # print(data)
+
+from src.find_path import find_path
+
+find_path("ca.txt", "E:\Cats\LabaPython\python_lab2\src")
