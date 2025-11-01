@@ -3,6 +3,14 @@ import tarfile
 from src.check_path import check_path
 
 def tar(current_path, data):
+    """
+    Создание tar.gz архива указанного каталога
+
+    Создаёт tar.gz архив
+    В архив записывает путь к файлу директории
+    и его относительный путь от архивируемого каталога
+    Это нужно для сохранения структуры каталога в архиве
+    """
     dir = data[0]
     tar_name = data[1]
 

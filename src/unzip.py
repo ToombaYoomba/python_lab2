@@ -4,6 +4,12 @@ from src.check_path import check_path
 
 
 def unzip(current_path, data):
+    """
+    Разархивация указанного zip файла
+
+    Открывает указанный zip файл и достаёт из него содержимое
+    Место разархивации - текущий каталог
+    """
     zip_file = data[0]
 
     zip_data = check_path(current_path, zip_file)

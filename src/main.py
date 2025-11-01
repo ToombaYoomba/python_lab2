@@ -1,4 +1,6 @@
 from os import getcwd
+import os
+import shutil
 
 from src.cat import cat
 from src.cd import cd
@@ -20,16 +22,23 @@ from src.undo import undo
 def main() -> None:
     current_path = getcwd().replace("\\", "/")
     # print(f"current path: {current_path}")
-    meta(current_path)
 
     flag = True
+    setup_loggers()
+    try:
+        os.mkdir("trash")
+    except Exception:
+        shutil.rmtree("trash")
+        os.mkdir("trash")
 
     while flag:
         error = None
 
         print(f"\n{current_path}    ₍^. .^₎⟆")
+        
         input_data = input("$ ")
-        setup_loggers()
+        
+        
 
         if len(input_data) == 0 or len(input_data) == 0:
             pass
@@ -102,7 +111,7 @@ def main() -> None:
                         cp(current_path, command_data)
 
                         log("i", input_data)
-                        meta(input_data)
+                        meta(command, input_data.split(" ", maxsplit=1)[1:])
 
                 elif command == "mv":
                     if command_data is None:
@@ -116,7 +125,7 @@ def main() -> None:
                         meta_data = mv(current_path, command_data)
 
                         log("i", input_data)
-                        meta(meta_data)
+                        meta(command, meta_data)
 
                 elif command == "rm":
                     if command_data is None:
@@ -127,9 +136,10 @@ def main() -> None:
                             print(f.readlines()[-1].strip())
 
                     else:
-                        rm(current_path, command_data)
+                        meta_data = rm(current_path, command_data)
 
                         log("i", input_data)
+                        meta(command, meta_data)
 
                 elif command == "zip":
                     if command_data is None:
@@ -257,6 +267,8 @@ def main() -> None:
 
                     with open("meta.log", "w", encoding="utf-8"):
                         pass
+
+                    shutil.rmtree("trash")
 
                 else:
                     error = f"unknown command {input_data}"

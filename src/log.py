@@ -1,6 +1,12 @@
 import logging
 
 def setup_loggers():
+    """
+    Создание логин файлов для логирования
+
+    Отдельно создаются логин файлы для комнад, доступных к откату
+    И отдельно для всех команд и ошибок
+    """
     # Логгер для meta.log
     
     meta_logger = logging.getLogger('meta')
@@ -18,11 +24,21 @@ def setup_loggers():
         shell_handler.setFormatter(logging.Formatter("[%(asctime)s] %(levelname)s %(message)s"))
         shell_logger.addHandler(shell_handler)
 
-def meta(input_data):
+def meta(command, input_data):
+    """
+    Логирование команд с возможностью отката
+
+    На вход получает команду и её данные
+    """
     meta_logger = logging.getLogger('meta')
-    meta_logger.info(input_data)
+    meta_logger.info([command, input_data])
 
 def log(flag, input_data):
+    """
+    Логирование команд и ошибок
+
+    На вход получает команду и её данные, а также пометку для определения ошибки
+    """
     shell_logger = logging.getLogger('shell')
 
     if flag == "e":

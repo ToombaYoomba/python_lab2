@@ -1,7 +1,10 @@
 import os
 import shutil
+from src.cp import cp
 
 from src.check_path import check_path
+from src.find_path import find_path
+from src.constants import TRASH_PATH
 
 # current_path = getcwd().replace("\\", "/")
 # print(f"current path: {current_path}")
@@ -11,6 +14,14 @@ from src.check_path import check_path
 
 
 def rm(current_path, data):
+    """
+    Удаление указанного файла/каталога
+
+    На вход получает текущий путь и список из файлов/каталогов для удаления
+    Поддержка опции - для удаления каталога рекурсивно со всем содержимым.
+    Подтверждение удаления при попытке удлаения директории
+    Нельзя удалить родительскую диреткорию от текущей или корневую
+    """
     flag = None
     copy_data = None
 
@@ -43,13 +54,17 @@ def rm(current_path, data):
             )
 
             if confirmation == "y":
+                item_paths = []
                 for item in copy_data:
                     item_data = check_path(current_path, item)
                     item_path = item_data[1]
+                    item_paths.append(item_path)
 
                     if os.path.isfile(item_path):
+                        cp(current_path, [item_path, find_path(TRASH_PATH)])
                         os.remove(item_path)
                     else:
+                        cp(current_path, ["-r", item_path, find_path(TRASH_PATH)])
                         shutil.rmtree(item_path)
 
             elif confirmation == "n":
@@ -61,11 +76,17 @@ def rm(current_path, data):
             print("нельзя удалить исходящую папку")
 
     else:
+        item_paths = []
         for item in copy_data:
             item_data = check_path(current_path, item)
             item_path = item_data[1]
-
+            item_paths.append(item_path)
+            cp(current_path, [item_path, find_path(TRASH_PATH)])
             os.remove(item_path)
+    try:
 
+        return [flag, item_paths]
+    except Exception:
+        return None
 
 # rm(current_path, data)

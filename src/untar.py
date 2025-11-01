@@ -2,6 +2,12 @@ import tarfile
 from src.check_path import check_path
 
 def untar(current_path, data):
+    """
+    Разархивация указанного tar.gz файла
+
+    Открывает указанный tar.gz файл и достаёт из него содержимое
+    Место разархивации - текущий каталог
+    """
     tar_file = data[0]
 
     tar_data = check_path(current_path, tar_file)
