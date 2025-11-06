@@ -52,7 +52,7 @@ def cp(current_path, data):
                 )
 
             else:
-                raise FuncError(f"wtf {item_path, destination_path + '/' + item_path.split('/')[-1]}")
+                raise FuncError(f"bad cp path {item_path, destination_path + '/' + item_path.split('/')[-1]}")
 
     else:
         for file in files_to_copy:
@@ -61,7 +61,7 @@ def cp(current_path, data):
                 file_path = path_start_data[1]
                 shutil.copy2(file_path, destination_path)
             else:
-                raise FuncError("Trying to copy to many files")
+                raise FuncError("Trying to copy dir without -r option")
 
 
 # cp(current_path, data)

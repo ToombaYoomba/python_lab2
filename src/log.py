@@ -45,3 +45,12 @@ def log(flag, input_data):
         shell_logger.error(input_data)
     else:
         shell_logger.info(input_data)
+
+def hs(input_data):
+    """
+    Сохранение списка введённых пользователем команд
+
+    На вход получает кввод пользователя в терминал
+    """
+    with open(".history", "a") as f:
+        f.write(f"{input_data}\n")

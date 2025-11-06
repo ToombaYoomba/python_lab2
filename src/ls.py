@@ -37,10 +37,22 @@ def ls(current_path, data):
 
     file_path_data = check_path(current_path, file_path)
 
+    # print(file_path_data)
+
+    file_path = check_path(current_path, file_path)[1]
+
     if file_path_data[0] == "n":
         file_path = current_path
 
+    # print(current_path, file_path)
+
     files = []
+
+    if file_path_data[0] in ["f./", "frec", "fabs"]:
+        raise FuncError("ls path to file")
+
+    elif file_path_data[0] in ["newrec", "newabs"]:
+        raise FuncError("ls path to nonexistent directory")
 
     if flag == "-l":
         # print("name  type  size  change_time    permissions")
@@ -82,8 +94,8 @@ def ls(current_path, data):
         #     print(item[0], item[1], item[2], item[3], item[4])
 
     else:
+        # print(file_path)
         files = listdir(file_path)
-        files = [[file] for file in files]
 
         # for item in files:
         #     print(item)

@@ -85,7 +85,7 @@ def grep(current_path, data):
                 pattern = pattern.lower()
                 for root, dirs, files in os.walk(search_path):
                     for file in files:
-                        file_path = os.path.join(root, file)
+                        file_path = os.path.join(root, file).replace("\\", "/")
 
                         with open(file_path, 'r') as f:
                             # print(f"file opened")
@@ -94,14 +94,14 @@ def grep(current_path, data):
                                     # print(i, line)
                                     if pattern in line.lower():
                                         result.append(f"{file_path} {i}: {line.strip()}")
-                                        print(f"{file_path} {i}: {line.strip()}")
+                                        # print(f"{file_path} {i}: {line.strip()}")
                             except Exception:
                                 pass
             
             else:
                 for root, dirs, files in os.walk(search_path):
                     for file in files:
-                        file_path = os.path.join(root, file)
+                        file_path = os.path.join(root, file).replace("\\", "/")
 
                         with open(file_path, 'r') as f:
                             # print(f"file opened")
@@ -110,7 +110,7 @@ def grep(current_path, data):
                                     # print(i, line)
                                     if pattern in line:
                                         result.append(f"{file_path} {i}: {line.strip()}")
-                                        print(f"{file_path} {i}: {line.strip()}")
+                                        # print(f"{file_path} {i}: {line.strip()}")
                             except Exception:
                                 pass
 
@@ -129,7 +129,7 @@ def grep(current_path, data):
                 with open(search_path, 'r') as f:
                     for i, line in enumerate(f, 1):
                         if pattern in line.lower():
-                            result.append(f"{file_path} {i}: {line.strip()}")
+                            result.append(f"{search_path} {i}: {line.strip()}")
                             # print(f"{search_path} {i}: {line.strip()}")
 
             else:
@@ -138,7 +138,7 @@ def grep(current_path, data):
                     for i, line in enumerate(f, 1):
                         # print(i, line)
                         if pattern in line:
-                            result.append(f"{file_path} {i}: {line.strip()}")
+                            result.append(f"{search_path} {i}: {line.strip()}")
                             # print(f"{search_path} {i}: {line.strip()}")
 
         else:

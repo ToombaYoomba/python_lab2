@@ -14,7 +14,7 @@ def check_path(current_path, needed_path):
 
     На вход получает текущий путь и путь на проверку
     Обрабатывает все возможные случаи с путями
-    Возвращает новый путь в форме абсолютного
+    Возвращает список: случай обработки пути, новый абсолютный путь, введённый путь
     """
     case = None
     buffer_path = None
@@ -31,9 +31,9 @@ def check_path(current_path, needed_path):
         case = "n"  # no path
         buffer_path = None
 
-    elif len(needed_path[0].strip()) == 0 or len(needed_path[0]) == 0:
-        case = "n"  # no path
-        buffer_path = None
+    # elif len(needed_path[0].strip()) == 0 or len(needed_path[0]) == 0:
+    #     case = "n"  # no path
+    #     buffer_path = None
 
     elif needed_path[0] == "..":
         case = "b"  # back path
@@ -80,6 +80,13 @@ def check_path(current_path, needed_path):
         added_path = "/".join(needed_path)
 
         new_path = current_path + "/" + "/".join(needed_path)
+
+        # print(added_path, new_path)
+
+        # if os.path.exists(added_path):
+        #     print(1)
+        # else:
+        #     print(0)
 
         if os.path.exists(new_path):  # is rec
             if os.path.isfile(new_path):

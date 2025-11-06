@@ -11,9 +11,9 @@ def history(N = None):
     result = []
 
     if N is None:
-        with open("shell.log", "r") as f:
+        with open(".history", "r") as f:
             for line in f.readlines():
-                result.append(line.strip().split(" ", maxsplit=2)[2])
+                result.append(line.strip())
                 # print(line.strip().split(" ", maxsplit=2)[2])
 
     else:
@@ -21,13 +21,13 @@ def history(N = None):
             N = int(N)
         except Exception:
             print("wrong argument for history")
-        with open("shell.log", "r") as f:
+        with open(".history", "r") as f:
                 
                 lines = f.readlines()
                 i = -N
                 while i < 0:
                     try:
-                        result.append(lines[i].strip().split(" ", maxsplit=2)[2])
+                        result.append(lines[i].strip())
                         # print(lines[i].strip().split(" ", maxsplit=2)[2])
                         i += 1
 

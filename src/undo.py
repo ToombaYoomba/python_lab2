@@ -7,6 +7,24 @@ import os
 import shutil
 import ast
 
+def remove_last_line():
+    try:
+        with open("meta.log", 'r') as file:
+            lines = file.readlines()
+        
+        if lines:
+            lines = lines[:-1]
+            
+            with open("meta.log", 'w') as file:
+                file.writelines(lines)
+        else:
+            raise FuncError("meta.log file empty")
+            
+    except FileNotFoundError:
+        FuncError("no file meta.log")
+    except Exception:
+        print("remove_last_line error")
+
 def uncp(current_path, data):
     flag = None
     copy_data = None
@@ -121,4 +139,6 @@ def undo(current_path):
 
         else:
             raise FuncError("unknown command")
+        
+        remove_last_line()
         

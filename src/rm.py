@@ -69,7 +69,7 @@ def rm(current_path, data):
                         shutil.rmtree(item_path)
 
             elif confirmation == "n":
-                raise FuncError("lazy bastard")
+                print("lazy darling")
             else:
                 raise FuncError("unknown command")
 

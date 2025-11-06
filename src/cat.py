@@ -39,6 +39,9 @@ def cat(current_path, data):
 
     elif data[0] in ["c", "rec./", "rec", "abs"]:
         raise FuncError(f"{data[2]} is not file")
+    
+    elif data[0] in ["newabs", "newrec"]:
+        raise FuncError(f"{data[2]} file not found")
 
     elif data[0] in ["f./", "frec", "fabs"]:
         with open(data[1], "r", encoding="utf-8") as file:

@@ -18,7 +18,7 @@ def tar(current_path, data):
     dir_data = check_path(current_path, dir)
     dir_path = dir_data[1]
 
-    if dir_data[0] in ["f./", "frec", "fabs"]:
+    if dir_data[0] in ["c", "rec./", "rec", "abs"]:
         tar_data = check_path(current_path, tar_name)
         tar_path = tar_data[1]
 

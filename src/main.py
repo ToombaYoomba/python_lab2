@@ -8,7 +8,7 @@ from src.constants import MainError
 from src.cp import cp
 from src.grep import grep
 from src.history import history
-from src.log import log, meta, setup_loggers
+from src.log import log, meta, setup_loggers, hs
 from src.ls import ls
 from src.mv import mv
 from src.rm import rm
@@ -42,6 +42,8 @@ def main() -> None:
             pass
 
         else:
+            hs(input_data)
+            
             command = input_data.split()[0]
 
             if len(input_data.split()) > 1:
@@ -58,7 +60,7 @@ def main() -> None:
                     files = ls(current_path, command_data)
 
                     for file in files:
-                        print(*file)
+                        print(*[file])
 
                     log("i", input_data)
 
@@ -221,6 +223,7 @@ def main() -> None:
 
                 elif command == "undo":
                     undo(current_path)
+                    log("i", input_data)
 
                 elif command == "q":
                     flag = False
