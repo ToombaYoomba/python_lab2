@@ -1,6 +1,7 @@
 import zipfile
 
 from src.check_path import check_path
+from src.constants import FuncError
 
 
 def unzip(current_path, data):
@@ -22,4 +23,4 @@ def unzip(current_path, data):
         print(f"Extracted zip file {zip_file} to current directory")
 
     else:
-        print("ERROR: zip file not found")
+        raise FuncError("zip file not found")

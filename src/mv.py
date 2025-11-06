@@ -3,6 +3,7 @@ import shutil
 
 from src.check_path import check_path
 from src.cp import cp
+from src.constants import FuncError
 
 # current_path = getcwd().replace("\\", "/")
 # print(f"current path: {current_path}")
@@ -49,7 +50,7 @@ def mv(current_path, data):
 
     elif destination_data[0] in ["f./", "frec", "fabs", "newrec", "newabs"]:
         if len(files_to_move) != 1:
-            print("too many/few files to move")
+            raise FuncError("too many/few files to move")
 
         else:
             file = files_to_move[0]
@@ -61,9 +62,9 @@ def mv(current_path, data):
                 cp(current_path, data)
                 os.remove(file_data[1])
             elif file_data[0] in ["c", "rec./", "rec", "abs"]:
-                print("can't move dir to file")
+                raise FuncError("can't move dir to file")
             else:
-                print(f"moving error {destination_data[0]}")
+                raise FuncError(f"moving error {destination_data[0]}")
 
     meta_data = [files_paths, destination_path]
     return meta_data

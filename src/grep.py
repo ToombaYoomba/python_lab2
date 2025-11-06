@@ -1,6 +1,7 @@
 import os
 
 from src.check_path import check_path
+from src.constants import FuncError
 
 def grep(current_path, data):
     """
@@ -25,19 +26,19 @@ def grep(current_path, data):
             if len(data) in [3,4]:
                 grep_data = data[2:]
             else:
-                print("wrong number of arguments")
+                raise FuncError("wrong number of arguments")
                 return 0
         elif len(data) > 2 and flags[0] == "-i" and data[1] == "-r":
             flags.append("-r")
             if len(data) in [3,4]:
                 grep_data = data[2:]
             else:
-                print("wrong number of arguments")
+                raise FuncError("wrong number of arguments")
                 return 0
         elif len(data) in [2,3]:
             grep_data = data[1:]
         else:
-            print("wrong number of arguments")
+            raise FuncError("wrong number of arguments")
             return 0
         
     elif data[0] == "-ri" or data[0] == "-ir":
@@ -47,14 +48,14 @@ def grep(current_path, data):
         if len(data) in [2,3]:
             grep_data = data[1:]
         else:
-            print("wrong number of arguments")
+            raise FuncError("wrong number of arguments")
             return 0
 
     elif len(data) in [1,2]:
         grep_data = data
 
     else:
-        print("wrong number of arguments")
+        raise FuncError("wrong number of arguments")
         return 0
     
 
@@ -71,6 +72,8 @@ def grep(current_path, data):
 
     search_data = check_path(current_path, search_place)
     search_path = search_data[1]
+
+    result = []
 
     # print(f"pattern {pattern}")
     # print(f"search path {search_path}")
@@ -90,6 +93,7 @@ def grep(current_path, data):
                                 for i, line in enumerate(f, 1):
                                     # print(i, line)
                                     if pattern in line.lower():
+                                        result.append(f"{file_path} {i}: {line.strip()}")
                                         print(f"{file_path} {i}: {line.strip()}")
                             except Exception:
                                 pass
@@ -105,6 +109,7 @@ def grep(current_path, data):
                                 for i, line in enumerate(f, 1):
                                     # print(i, line)
                                     if pattern in line:
+                                        result.append(f"{file_path} {i}: {line.strip()}")
                                         print(f"{file_path} {i}: {line.strip()}")
                             except Exception:
                                 pass
@@ -112,7 +117,7 @@ def grep(current_path, data):
 
         else:
 
-            print(f"path not dir {search_path}")
+            raise FuncError(f"path not dir {search_path}")
 
 
     else:
@@ -124,17 +129,21 @@ def grep(current_path, data):
                 with open(search_path, 'r') as f:
                     for i, line in enumerate(f, 1):
                         if pattern in line.lower():
-                            print(f"{search_path} {i}: {line.strip()}")
+                            result.append(f"{file_path} {i}: {line.strip()}")
+                            # print(f"{search_path} {i}: {line.strip()}")
 
             else:
                 with open(search_path, 'r') as f:
-                    print(f"file opened")
+                    # print(f"file opened")
                     for i, line in enumerate(f, 1):
                         # print(i, line)
                         if pattern in line:
-                            print(f"{search_path} {i}: {line.strip()}")
+                            result.append(f"{file_path} {i}: {line.strip()}")
+                            # print(f"{search_path} {i}: {line.strip()}")
 
         else:
-            print(f"path not file {search_path}")
+            raise FuncError(f"path not file {search_path}")
+
+    return result
 
 

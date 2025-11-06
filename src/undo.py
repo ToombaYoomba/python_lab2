@@ -2,6 +2,7 @@ from src.check_path import check_path
 from src.find_path import find_path
 from src.mv import mv
 from src.constants import TRASH_PATH
+from src.constants import FuncError
 import os
 import shutil
 import ast
@@ -41,7 +42,7 @@ def uncp(current_path, data):
                     shutil.rmtree(item_path)
 
         else:
-            print("нельзя удалить исходящую папку при undo для cp")
+            raise FuncError("нельзя удалить исходящую папку при undo для cp")
 
     else:
         for item_path in paths_list:
@@ -61,7 +62,7 @@ def unmv(current_path, data):
             # print(f"into mv {current_position, mv_data}")
             mv(current_position, mv_data)
         except Exception:
-            print(f"file not found {file_name}")
+            raise FuncError(f"file not found {file_name}")
 
 def unrm(current_path, data):
     flag = data[0]
@@ -95,7 +96,7 @@ def undo(current_path):
         try:
             log = lines[-1].strip()
         except Exception:
-            print("history clear")
+            raise FuncError("history clear")
             return 0
         
         # print(log)
@@ -119,5 +120,5 @@ def undo(current_path):
             unrm(current_path, command_data)
 
         else:
-            print("unknown command")
+            raise FuncError("unknown command")
         

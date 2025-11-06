@@ -3,6 +3,7 @@ from datetime import datetime
 from os import listdir, scandir
 
 from src.check_path import check_path
+from src.constants import FuncError
 
 # data = input().split()
 
@@ -13,7 +14,7 @@ def ls(current_path, data):
 
     На вход получает текущий путь и путь к директории
     Если путь к директории не указан, то выводит содержимое текущей
-    Поддержка опции –1 для подробного отображения 
+    Поддержка опции –l для подробного отображения 
     """
     if data is None:
         file_path = None
@@ -32,7 +33,7 @@ def ls(current_path, data):
         flag = data[0]
         file_path = data[1]
     else:
-        print("too many ls arguments")
+        raise FuncError("too many ls arguments")
 
     file_path_data = check_path(current_path, file_path)
 
@@ -77,16 +78,17 @@ def ls(current_path, data):
 
             files.append(file_stats)  # to whole scope
 
-        for item in files:
-            print(item[0], item[1], item[2], item[3], item[4])
+        # for item in files:
+        #     print(item[0], item[1], item[2], item[3], item[4])
 
     else:
         files = listdir(file_path)
+        files = [[file] for file in files]
 
-        for item in files:
-            print(item)
+        # for item in files:
+        #     print(item)
 
-    # return files
+    return files
 
 
 # print(ls(data))

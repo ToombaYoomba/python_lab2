@@ -1,5 +1,6 @@
 import tarfile
 from src.check_path import check_path
+from src.constants import FuncError
 
 def untar(current_path, data):
     """
@@ -20,4 +21,4 @@ def untar(current_path, data):
         print(f"Extracted tar.gz file {tar_file} to current directory")
 
     else:
-        print("ERROR: tar.gz file not found")
+        raise FuncError("tar.gz file not found")

@@ -1,4 +1,5 @@
 from src.check_path import check_path
+from src.constants import FuncError
 
 # current_path = getcwd().replace("\\", "/")
 # print(f"current path: {current_path}")
@@ -24,26 +25,31 @@ def cat(current_path, data):
     """
     data = check_path(current_path, data)
 
+    result = None
+
     if data[0] == "n":
         # print(f"stay in current directory {current_path}")
         pass
 
     elif data[0] == "b":
-        print(f"no path: {data[2]}")
+        raise FuncError(f"no path: {data[2]}")
 
     elif data[0] == "s":
-        print(f"no path: {data[2]}")
+        raise FuncError(f"no path: {data[2]}")
 
     elif data[0] in ["c", "rec./", "rec", "abs"]:
-        print(f"{data[2]} is not file")
+        raise FuncError(f"{data[2]} is not file")
 
     elif data[0] in ["f./", "frec", "fabs"]:
         with open(data[1], "r", encoding="utf-8") as file:
             content = file.read()
-            print(content)
+            result = content
+            # print(content)
 
     else:
         pass
+
+    return content
 
 
 # cat(data)

@@ -1,6 +1,7 @@
 import shutil
 
 from src.check_path import check_path
+from src.constants import FuncError
 
 # current_path = getcwd().replace("\\", "/")
 # print(f"current path: {current_path}")
@@ -51,9 +52,7 @@ def cp(current_path, data):
                 )
 
             else:
-                print(
-                    f"wtf {item_path, destination_path + '/' + item_path.split('/')[-1]}"
-                )
+                raise FuncError(f"wtf {item_path, destination_path + '/' + item_path.split('/')[-1]}")
 
     else:
         for file in files_to_copy:
@@ -62,7 +61,7 @@ def cp(current_path, data):
                 file_path = path_start_data[1]
                 shutil.copy2(file_path, destination_path)
             else:
-                print("Trying to copy to many files")
+                raise FuncError("Trying to copy to many files")
 
 
 # cp(current_path, data)

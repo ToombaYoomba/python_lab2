@@ -1,22 +1,22 @@
-from os import getcwd
 import os
 import shutil
+from os import getcwd
 
 from src.cat import cat
 from src.cd import cd
+from src.constants import MainError
 from src.cp import cp
 from src.grep import grep
 from src.history import history
+from src.log import log, meta, setup_loggers
 from src.ls import ls
 from src.mv import mv
 from src.rm import rm
 from src.tar import tar
+from src.undo import undo
 from src.untar import untar
 from src.unzip import unzip
 from src.zip import zip
-from src.log import setup_loggers, log, meta
-from src.undo import undo
-
 
 
 def main() -> None:
@@ -35,10 +35,8 @@ def main() -> None:
         error = None
 
         print(f"\n{current_path}    ₍^. .^₎⟆")
-        
+
         input_data = input("$ ")
-        
-        
 
         if len(input_data) == 0 or len(input_data) == 0:
             pass
@@ -54,27 +52,24 @@ def main() -> None:
             # print(f"command {command}")
             # print(f"command data {command_data}")
 
-            if True:
-                # try:
+            # if True:
+            try:
                 if command == "ls":
-                    ls(current_path, command_data)
+                    files = ls(current_path, command_data)
+
+                    for file in files:
+                        print(*file)
 
                     log("i", input_data)
 
                 elif command == "cd":
                     if command_data is None:
                         error = "not enough arguments for cd"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     elif len(command_data) > 1:
                         error = "too many arguments for cd"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         current_path = cd(current_path, command_data[0])
@@ -83,29 +78,27 @@ def main() -> None:
 
                 elif command == "cat":
                     if command_data is None:
-                        cat(current_path, command_data)
+                        result = cat(current_path, command_data)
+
+                        print(result)
 
                         log("i", input_data)
 
                     elif len(command_data) > 1:
                         error = "too many arguments for cat"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
-                        cat(current_path, command_data[0])
+                        result = cat(current_path, command_data[0])
+
+                        print(result)
 
                         log("i", input_data)
 
                 elif command == "cp":
                     if command_data is None:
                         error = "not enough arguments for cp"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         cp(current_path, command_data)
@@ -116,10 +109,7 @@ def main() -> None:
                 elif command == "mv":
                     if command_data is None:
                         error = "not enough arguments for mv"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         meta_data = mv(current_path, command_data)
@@ -130,10 +120,7 @@ def main() -> None:
                 elif command == "rm":
                     if command_data is None:
                         error = "not enough arguments for rm"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         meta_data = rm(current_path, command_data)
@@ -144,17 +131,11 @@ def main() -> None:
                 elif command == "zip":
                     if command_data is None:
                         error = "not enough arguments for zip"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     elif len(command_data) != 2:
                         error = "wrong number of arguments for zip"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         zip(current_path, command_data)
@@ -164,17 +145,11 @@ def main() -> None:
                 elif command == "unzip":
                     if command_data is None:
                         error = "not enough arguments for unzip"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     elif len(command_data) != 1:
                         error = "wrong number of arguments for unzip"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         unzip(current_path, command_data)
@@ -184,17 +159,11 @@ def main() -> None:
                 elif command == "tar":
                     if command_data is None:
                         error = "not enough arguments for tar"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     elif len(command_data) != 2:
                         error = "wrong number of arguments for tar"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         tar(current_path, command_data)
@@ -204,16 +173,11 @@ def main() -> None:
                 elif command == "untar":
                     if command_data is None:
                         error = "not enough arguments for untar"
-                        log("e", error)
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     elif len(command_data) != 1:
                         error = "wrong number of arguments for untar"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
                         untar(current_path, command_data)
@@ -223,37 +187,37 @@ def main() -> None:
                 elif command == "grep":
                     if command_data is None:
                         error = "not enough arguments for grep"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     elif len(command_data) < 1:
                         error = "wrong number of arguments for grep"
-                        log("e", error)
-                        
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
-                        grep(current_path, command_data)
+                        result = grep(current_path, command_data)
+
+                        for item in result:
+                            print(item)
 
                         log("i", input_data)
 
                 elif command == "history":
                     if command_data is None:
-                        history(command_data)
+                        result = history(command_data)
+
+                        for item in result:
+                            print(item)
 
                     elif len(command_data) > 1:
                         error = "wrong number of arguments for history"
 
-                        log("e", error)
-
-                        with open("shell.log", "r") as f:
-                            print(f.readlines()[-1].strip())
+                        raise MainError(error)
 
                     else:
-                        history(command_data[0])
+                        result = history(command_data[0])
+
+                        for item in result:
+                            print(item)
 
                 elif command == "undo":
                     undo(current_path)
@@ -272,16 +236,12 @@ def main() -> None:
 
                 else:
                     error = f"unknown command {input_data}"
-                    log("e", error)
-                    with open("shell.log", "r") as f:
-                        print(f.readlines()[-1].strip())
+                    raise MainError(error)
 
-                    
-
-            # except Exception as error:
-            #     log("e", str(error))
-            #     with open("shell.log", "r") as f:
-            #         print(f.readlines()[-1].strip())
+            except Exception as error:
+                log("e", str(error))
+                with open("shell.log", "r") as f:
+                    print(f.readlines()[-1].strip())
 
 
 if __name__ == "__main__":

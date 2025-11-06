@@ -1,4 +1,5 @@
 import os
+from src.constants import AddFuncError
 
 def find_path(filename, search_path = None):
     """
@@ -25,5 +26,5 @@ def find_path(filename, search_path = None):
                 # print(f"Файл найден: {file_path}")
                 return file_path
         
-    print(f"Файл '{filename}' не найден.")
+    raise AddFuncError(f"Файл '{filename}' не найден.")
     return None

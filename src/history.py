@@ -8,10 +8,13 @@ def history(N = None):
     Если нету аргумента числа - выводит все команды из истории
     """
 
+    result = []
+
     if N is None:
-        with open("src/shell.log", "r") as f:
+        with open("shell.log", "r") as f:
             for line in f.readlines():
-                print(line.strip())
+                result.append(line.strip().split(" ", maxsplit=2)[2])
+                # print(line.strip().split(" ", maxsplit=2)[2])
 
     else:
         try:
@@ -24,8 +27,11 @@ def history(N = None):
                 i = -N
                 while i < 0:
                     try:
-                        print(lines[i].strip())
+                        result.append(lines[i].strip().split(" ", maxsplit=2)[2])
+                        # print(lines[i].strip().split(" ", maxsplit=2)[2])
                         i += 1
 
                     except Exception:
                         return 0
+                    
+    return result

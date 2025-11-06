@@ -1,6 +1,7 @@
 import os
 import tarfile
 from src.check_path import check_path
+from src.constants import FuncError
 
 def tar(current_path, data):
     """
@@ -37,4 +38,4 @@ def tar(current_path, data):
         print(f"Created tar.gz file {tar_name} from dir {dir}")
 
     else:
-        print("ERROR: dir not found")
+        raise FuncError("dir not found")

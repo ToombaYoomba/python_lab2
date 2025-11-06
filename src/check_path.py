@@ -1,4 +1,5 @@
 import os
+from src.constants import AddFuncError
 
 # current_path = getcwd().replace("\\", "/")
 # print(current_path)
@@ -43,7 +44,7 @@ def check_path(current_path, needed_path):
             buffer_path = new_path
 
         else:
-            print("Error bad path ..")
+            raise AddFuncError("Error bad path ..")
             case = "e"
 
     elif needed_path[0] == "~":
@@ -69,7 +70,7 @@ def check_path(current_path, needed_path):
                 # print(f"new path from current ./: {buffer_path}")
 
             else:
-                print(f"Error bad path ./{enter_path}")
+                raise AddFuncError(f"Error bad path ./{enter_path}")
                 case = "e"
 
     # directories = [item.name for item in scandir(current_path) if item.is_dir()]
@@ -103,7 +104,7 @@ def check_path(current_path, needed_path):
             buffer_path = added_path
 
         else:
-            print(f"Error bad path not found {enter_path}")
+            (f"Error bad path not found {enter_path}")
             case = "e"
 
     return [case, buffer_path, enter_path]

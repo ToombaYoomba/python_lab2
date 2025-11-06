@@ -1,4 +1,5 @@
 from src.check_path import check_path
+from src.constants import FuncError
 
 # current_path = getcwd().replace("\\", "/")
 # print(f"current path: {current_path}")
@@ -53,13 +54,13 @@ def cd(current_path, data):
         print(f"new path absolute: {current_path}")
 
     elif data[0] in ["f./", "frec", "fabs"]:
-        print(f"can't move to file {data[2]}")
+        raise FuncError(f"can't move to file {data[2]}")
 
     elif data[0] == "e":
         pass
 
     else:
-        print(f"bad case in cd with input: {data[2]}")
+        raise FuncError(f"bad case in cd with input: {data[2]}")
 
     return current_path
 

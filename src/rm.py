@@ -5,6 +5,7 @@ from src.cp import cp
 from src.check_path import check_path
 from src.find_path import find_path
 from src.constants import TRASH_PATH
+from src.constants import FuncError
 
 # current_path = getcwd().replace("\\", "/")
 # print(f"current path: {current_path}")
@@ -37,7 +38,7 @@ def rm(current_path, data):
         any([(item in ["c", "rec./", "rec", "abs"]) for item in type_list])
         and flag != "-r"
     ):
-        print("can't delete catalogue without '-r' option")
+        raise FuncError("can't delete catalogue without '-r' option")
 
     elif any([(item in ["c", "rec./", "rec", "abs"]) for item in type_list]):
         paths_list = [check_path(current_path, item)[1] for item in copy_data]
@@ -68,12 +69,12 @@ def rm(current_path, data):
                         shutil.rmtree(item_path)
 
             elif confirmation == "n":
-                print("lazy bastard")
+                raise FuncError("lazy bastard")
             else:
-                print("unknown command")
+                raise FuncError("unknown command")
 
         else:
-            print("нельзя удалить исходящую папку")
+            raise FuncError("нельзя удалить исходящую папку")
 
     else:
         item_paths = []
@@ -83,8 +84,8 @@ def rm(current_path, data):
             item_paths.append(item_path)
             cp(current_path, [item_path, find_path(TRASH_PATH)])
             os.remove(item_path)
-    try:
 
+    try:
         return [flag, item_paths]
     except Exception:
         return None
